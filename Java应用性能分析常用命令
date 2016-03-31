@@ -1,0 +1,17 @@
+1. 查询Java线程数：
+
+ps -eLf | grep java -c
+
+2. 查询gc情况
+jstat -gcutil 76691 1000 5
+
+3. 查询Java线程情况
+jstack pid >> jstack8.txt
+
+4. 查询jstack线程中各种状态线程的数量
+grep java.lang.Thread.State jstack8.txt | awk '{print $2$3$4$5}' | sort | uniq -c
+
+注意blocked和deadlocked状态的线程
+
+5. 查询TCP链接状态
+netstat -nat | awk '{print $6}' | sort | uniq -c | sort -n
