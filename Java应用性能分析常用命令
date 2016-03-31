@@ -9,9 +9,12 @@ jstat -gcutil 76691 1000 5
 jstack pid >> jstack8.txt
 
 4. 查询jstack线程中各种状态线程的数量
-grep java.lang.Thread.State jstack8.txt | awk '{print $2$3$4$5}' | sort | uniq -c
+grep java.lang.Thread.State jstack10.txt | awk '{print $2$3$4$5}' | sort | uniq -c
 
 注意blocked和deadlocked状态的线程
 
-5. 查询TCP链接状态
+5. 用以下命令生成jstack summary，查找blocked或者deadlock都集中在哪些线程。
+POST http://www.xinitek.com/ajax/summaryJStack < jstack10.log > jstack10.log.summary
+
+6. 查询TCP链接状态
 netstat -nat | awk '{print $6}' | sort | uniq -c | sort -n
